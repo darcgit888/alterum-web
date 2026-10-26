@@ -1,0 +1,112 @@
+---
+import '../styles/global.css';
+import { empresa } from '../data/empresa';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+}
+
+const { titulo, descripcion } = Astro.props;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content={new URL('/logo-alterum.jpg', Astro.site)} />
+    <meta property="og:locale" content="es_MX" />
+  </head>
+  <body>
+    <header class="encabezado">
+      <div class="contenedor fila">
+        <a href="/" aria-label="Inicio">
+          <img src="/logo-alterum.webp" alt={empresa.razonSocial} width="160" height="91" />
+        </a>
+        <nav>
+          <a href="/#servicios">Servicios</a>
+          <a href="/politica-de-calidad">Calidad</a>
+          <a href="/#contacto">Contacto</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor">
+        <p>
+          {empresa.razonSocial} · empresa de{' '}
+          <a href={empresa.grupoUrl}>{empresa.grupo}</a> · {empresa.ciudad}
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .encabezado {
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .fila img {
+    width: 104px;
+  }
+
+  nav {
+    display: flex;
+    gap: 14px;
+  }
+
+  nav a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .pie {
+    margin-top: 64px;
+    padding: 24px 0;
+    background: var(--gris);
+    color: #fff;
+    font-size: 0.9rem;
+  }
+
+  .pie a {
+    color: var(--amarillo);
+  }
+
+  @media (min-width: 768px) {
+    .fila img {
+      width: 160px;
+    }
+
+    nav {
+      gap: 20px;
+    }
+
+    nav a {
+      font-size: 1rem;
+    }
+  }
+</style>

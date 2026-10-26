@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import { empresa, iso } from '../data/empresa';
+
+// Texto FIRMADO por la Dirección (Rev.00, 11-sep-2026). Se copia tal cual: cambiar una
+// palabra exige una nueva revisión con la consultora, no un commit.
+const compromisos = [
+  'Cumplir los requisitos del cliente y los requisitos legales, reglamentarios, normativos y técnicos aplicables.',
+  'Asegurar la calidad, confiabilidad y desempeño de los materiales, equipos y servicios de construcción, mantenimiento industrial, renta de maquinaria, comercialización de concreto especializado, transformación de metales y servicios ferroviarios.',
+  'Fortalecer la entrega oportuna y el servicio justo a tiempo, procurando superar las expectativas de nuestros clientes.',
+  'Desarrollar y mantener las competencias del personal, promoviendo una cultura de calidad, responsabilidad y enfoque al cliente.',
+  'Gestionar nuestros procesos mediante un enfoque basado en riesgos y oportunidades, orientado al cumplimiento de los resultados planificados.',
+  'Mantener relaciones de colaboración con proveedores y otras partes interesadas que contribuyan a la calidad y continuidad de nuestras operaciones.',
+  'Medir y evaluar el desempeño de nuestros procesos y objetivos de calidad para tomar decisiones basadas en evidencia.',
+  'Impulsar la mejora continua de la eficacia del Sistema de Gestión de la Calidad, previniendo errores, reduciendo no conformidades y fortaleciendo nuestros procesos.',
+];
+---
+
+<Base
+  titulo={`Política de Calidad | ${empresa.nombre}`}
+  descripcion={`Política de Calidad de ${empresa.razonSocial}. ${iso}.`}
+>
+  <article class="contenedor documento">
+    <span class="etiqueta">{iso}</span>
+    <h1>Política de Calidad</h1>
+    <p class="meta">{empresa.razonSocial} · Rev.00 · 11 de septiembre de 2026</p>
+
+    <p class="aviso">
+      Estamos en proceso de certificación ISO 9001:2015. Esta política forma parte del sistema de
+      gestión de calidad que estamos implementando. Todavía no contamos con el certificado.
+    </p>
+
+    <p>
+      En ALTERUM Ingeniería S.A. de C.V. estamos comprometidos con la satisfacción de nuestros
+      clientes, mediante la prestación de servicios de mantenimiento, materiales, equipos y servicios
+      de construcción, mantenimiento industrial, renta de maquinaria, comercialización de concreto
+      especializado, transformación de metales y servicios ferroviarios, asegurando el cumplimiento
+      de sus requisitos y de las normas, especificaciones técnicas, requisitos legales y
+      reglamentarios aplicables. Orientamos nuestras actividades a proporcionar productos y
+      servicios confiables y conformes, con un servicio de excelencia y entregas justo a tiempo,
+      generando valor para nuestros clientes y fortaleciendo la confianza en nuestras soluciones.
+    </p>
+
+    <h2>Nos comprometemos a</h2>
+    <ul>
+      {compromisos.map((c) => <li>{c}</li>)}
+    </ul>
+
+    <p>
+      La Dirección asume el compromiso de proporcionar los recursos necesarios y de asegurar la
+      mejora continua del Sistema de Gestión de la Calidad alineado con los requisitos de la norma
+      internacional ISO 9001.
+    </p>
+
+    <dl class="firma">
+      <dt>Aprobado por</dt>
+      <dd>Director General, Víctor Caamal Ramírez</dd>
+      <dt>Fecha</dt>
+      <dd>11 de septiembre de 2026</dd>
+      <dt>Revisión</dt>
+      <dd>Rev.00</dd>
+    </dl>
+  </article>
+</Base>
+
+<style>
+  .documento {
+    max-width: 760px;
+    padding-top: 40px;
+  }
+
+  .documento h1 {
+    margin: 16px 0 4px;
+  }
+
+  .meta {
+    color: var(--texto-suave);
+    margin-top: 0;
+  }
+
+  .aviso {
+    background: var(--fondo-suave);
+    border-left: 4px solid var(--amarillo);
+    padding: 12px 16px;
+    border-radius: 4px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  .firma {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 16px;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borde);
+  }
+
+  .firma dt {
+    font-weight: 600;
+    color: var(--gris);
+  }
+
+  .firma dd {
+    margin: 0;
+  }
+</style>

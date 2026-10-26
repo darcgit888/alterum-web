@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import { empresa, servicios, iso } from '../data/empresa';
+---
+
+<Base
+  titulo={`${empresa.nombre} | ${empresa.grupo}`}
+  descripcion={`${empresa.razonSocial}, empresa de ${empresa.grupo} en ${empresa.ciudad}. Construcción, mantenimiento industrial, renta de maquinaria, concreto especializado, transformación de metales y servicios ferroviarios.`}
+>
+  <section class="portada">
+    <div class="contenedor">
+      <span class="etiqueta">{iso}</span>
+      <h1>{empresa.nombre}</h1>
+      <p class="bajada">
+        Empresa de {empresa.grupo} en {empresa.ciudad}. Materiales, equipos y servicios para la
+        construcción y la industria.
+      </p>
+      <a class="boton" href="#contacto">Contáctanos</a>
+    </div>
+  </section>
+
+  <section id="servicios" class="contenedor">
+    <h2>Servicios</h2>
+    <ul class="rejilla">
+      {
+        servicios.map((s) => (
+          <li class="tarjeta">
+            <h3>{s.titulo}</h3>
+            <p>{s.texto}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="contenedor calidad">
+    <h2>Calidad</h2>
+    <p>
+      Estamos implementando un sistema de gestión de calidad y nos encontramos en proceso de
+      certificación ISO 9001:2015.
+    </p>
+    <a href="/politica-de-calidad">Lee nuestra Política de Calidad →</a>
+  </section>
+
+  <section id="contacto" class="contenedor">
+    <h2>Contacto</h2>
+    <p>Escríbenos y te respondemos a la brevedad.</p>
+    <a class="boton" href={`mailto:${empresa.correo}`}>{empresa.correo}</a>
+  </section>
+</Base>
+
+<style>
+  .portada {
+    background: var(--fondo-suave);
+    padding: 56px 0;
+    border-bottom: 4px solid var(--amarillo);
+  }
+
+  .portada h1 {
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    margin: 16px 0 8px;
+  }
+
+  .bajada {
+    font-size: 1.125rem;
+    color: var(--texto-suave);
+    max-width: 40rem;
+    margin: 0 0 24px;
+  }
+
+  section {
+    padding-top: 40px;
+  }
+
+  .rejilla {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta {
+    border: 1px solid var(--borde);
+    border-top: 3px solid var(--amarillo);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+
+  .tarjeta h3 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+  }
+
+  .tarjeta p {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+
+  .calidad a {
+    font-weight: 600;
+  }
+
+  @media (min-width: 640px) {
+    .rejilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .rejilla {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
