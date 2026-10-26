@@ -4,4 +4,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://alterumingenieria.com',
   trailingSlash: 'ignore',
+  // politica-de-calidad.html en vez de politica-de-calidad/index.html: la dirección abre
+  // directo, sin redirigir a la versión con "/" al final.
+  build: { format: 'file' },
 });
