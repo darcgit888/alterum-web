@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Portada from '../components/Portada.astro';
 import { empresa, servicios, iso } from '../data/empresa';
 ---
 
@@ -7,16 +8,14 @@ import { empresa, servicios, iso } from '../data/empresa';
   titulo={`${empresa.nombre} | ${empresa.grupo}`}
   descripcion={`${empresa.razonSocial}, empresa de ${empresa.grupo} en ${empresa.ciudad}. Construcción, mantenimiento industrial, renta de maquinaria, concreto especializado, transformación de metales y servicios ferroviarios.`}
 >
-  <section class="portada">
-    <div class="contenedor">
-      <span class="etiqueta">{iso}</span>
-      <h1>{empresa.nombre}</h1>
-      <p class="bajada">
-        Empresa de {empresa.grupo} en {empresa.ciudad}. Materiales, equipos y servicios para la
-        construcción y la industria.
-      </p>
-      <a class="boton" href="#contacto">Contáctanos</a>
-    </div>
+  <Portada />
+
+  <section class="contenedor presentacion">
+    <span class="etiqueta">{iso}</span>
+    <p class="bajada">
+      Empresa de {empresa.grupo} en {empresa.ciudad}. Materiales, equipos y servicios para la
+      construcción y la industria.
+    </p>
   </section>
 
   <section id="servicios" class="contenedor">
@@ -50,22 +49,11 @@ import { empresa, servicios, iso } from '../data/empresa';
 </Base>
 
 <style>
-  .portada {
-    background: var(--fondo-suave);
-    padding: 56px 0;
-    border-bottom: 4px solid var(--amarillo);
-  }
-
-  .portada h1 {
-    font-size: clamp(2rem, 6vw, 3.25rem);
-    margin: 16px 0 8px;
-  }
-
   .bajada {
     font-size: 1.125rem;
     color: var(--texto-suave);
     max-width: 40rem;
-    margin: 0 0 24px;
+    margin: 12px 0 0;
   }
 
   section {

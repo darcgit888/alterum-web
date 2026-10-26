@@ -21,6 +21,28 @@ export const servicios = [
   { titulo: 'Servicios ferroviarios', texto: 'Servicios para el sector ferroviario.' },
 ];
 
+// Carrusel de la portada. Fotos reales de Grupo Metalcam (carrusel de grupometalcam.com).
+// Una vuelta sin `foto` usa el fondo gris de la marca.
+export const portada = [
+  {
+    foto: 'ferroviario',
+    alt: 'Retroexcavadora ferroviaria trabajando sobre la vía',
+    titulo: 'Servicios ferroviarios',
+    texto: 'Maquinaria y personal para trabajar sobre la vía.',
+  },
+  {
+    foto: 'maquinaria',
+    alt: 'Camión plataforma trasladando maquinaria a la obra',
+    titulo: 'Renta de maquinaria',
+    texto: 'Equipos para obra, con traslado al sitio.',
+  },
+  {
+    titulo: 'Comprometidos con la calidad',
+    texto: 'Estamos en proceso de certificación ISO 9001:2015.',
+    liga: { texto: 'Política de Calidad', href: '/politica-de-calidad' },
+  },
+];
+
 // ⚠️ Decir SIEMPRE "en proceso". No hay certificado todavía: la auditoría del organismo
 // certificador está calendarizada entre junio y julio de 2027.
 export const iso = 'En proceso de certificación ISO 9001:2015';

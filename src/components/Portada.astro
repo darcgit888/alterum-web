@@ -1,0 +1,172 @@
+---
+import { empresa, portada } from '../data/empresa';
+---
+
+<section class="portada" aria-roledescription="carrusel" aria-label="Lo que hacemos">
+  {
+    portada.map((v, i) => (
+      <div class:list={['vuelta', { activa: i === 0, 'sin-foto': !v.foto }]} aria-hidden={i !== 0}>
+        {v.foto && (
+          <img
+            src={`/portada/${v.foto}-1600.webp`}
+            srcset={`/portada/${v.foto}-800.webp 800w, /portada/${v.foto}-1600.webp 1600w`}
+            sizes="100vw"
+            alt={v.alt}
+            width="1600"
+            height="800"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+          />
+        )}
+        <div class="contenedor texto">
+          {i === 0 ? <h1>{empresa.nombre}</h1> : <p class="marca">{empresa.nombre}</p>}
+          <h2>{v.titulo}</h2>
+          <p>{v.texto}</p>
+          {v.liga ? (
+            <a class="boton" href={v.liga.href}>{v.liga.texto}</a>
+          ) : (
+            <a class="boton" href="#contacto">Contáctanos</a>
+          )}
+        </div>
+      </div>
+    ))
+  }
+  <div class="puntos">
+    {
+      portada.map((v, i) => (
+        <button type="button" aria-label={`Ver: ${v.titulo}`} aria-current={i === 0} data-i={i} />
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  // Cambia de vuelta cada 6 s. Se detiene si el cursor está encima o si la persona pidió
+  // menos movimiento en su sistema.
+  const raiz = document.querySelector('.portada');
+  if (raiz) {
+    const vueltas = [...raiz.querySelectorAll<HTMLElement>('.vuelta')];
+    const puntos = [...raiz.querySelectorAll<HTMLButtonElement>('.puntos button')];
+    let actual = 0;
+    let pausa = false;
+
+    const ir = (n: number) => {
+      actual = (n + vueltas.length) % vueltas.length;
+      vueltas.forEach((v, i) => {
+        v.classList.toggle('activa', i === actual);
+        v.setAttribute('aria-hidden', String(i !== actual));
+      });
+      puntos.forEach((p, i) => p.setAttribute('aria-current', String(i === actual)));
+    };
+
+    puntos.forEach((p) => p.addEventListener('click', () => ir(Number(p.dataset.i))));
+    raiz.addEventListener('mouseenter', () => (pausa = true));
+    raiz.addEventListener('mouseleave', () => (pausa = false));
+
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(() => !pausa && ir(actual + 1), 6000);
+    }
+  }
+</script>
+
+<style>
+  .portada {
+    position: relative;
+    height: clamp(420px, 70vh, 620px);
+    overflow: hidden;
+    background: var(--gris);
+    border-bottom: 4px solid var(--amarillo);
+  }
+
+  .vuelta {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+
+  .vuelta.activa {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .vuelta img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Oscurece la foto por abajo para que el texto se lea sobre cualquier imagen. */
+  .vuelta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0.15) 65%);
+  }
+
+  .sin-foto {
+    background: radial-gradient(circle at 80% 20%, rgb(255 184 0 / 0.25), transparent 55%), var(--gris);
+  }
+
+  .sin-foto::after {
+    display: none;
+  }
+
+  .texto {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    z-index: 1;
+    color: #fff;
+  }
+
+  .texto h1,
+  .marca {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amarillo);
+  }
+
+  .texto h2 {
+    margin: 0 0 8px;
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    color: #fff;
+  }
+
+  .texto p {
+    margin: 0 0 20px;
+    font-size: 1.1rem;
+    max-width: 36rem;
+  }
+
+  .puntos {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .puntos button {
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .puntos button[aria-current='true'] {
+    background: var(--amarillo);
+    border-color: var(--amarillo);
+  }
+</style>
